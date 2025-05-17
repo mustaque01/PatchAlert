@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vulnerability Dashboard</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <header>
+    <h1>Vulnerability Monitoring Dashboard</h1>
+    <nav>
+      <a href="email.html">Email Settings</a>
+    </nav>
+  </header>
+
+  <main>
+    <input type="text" id="searchInput" placeholder="Search CVE or Product..." />
+    <div id="vulnContainer" class="grid"></div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
