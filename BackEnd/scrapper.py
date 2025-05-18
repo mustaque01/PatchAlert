@@ -3,16 +3,19 @@ from bs4 import BeautifulSoup
 import re
 import json
 from html import unescape
+from pymongo import mongo_client
+
+client = mongo_client.MongoClient("mongodb://localhost:27017/")
+db = client["VulnarabilityData"]
+collection = db["VulnarabilityData"]
 
 cisco = "https://tools.cisco.com/security/center/psirtrss20/CiscoSecurityAdvisory.xml"
 ubuntu = "https://ubuntu.com/security/notices/rss.xml"
 fortinet = "https://filestore.fortinet.com/fortiguard/rss/iotapp.xml"
 microsoft = "https://api.msrc.microsoft.com/update-guide/rss"
 
-response = requests.get(cisco)
+response = requests.get(ubuntu)
 soup = BeautifulSoup(response.content, 'xml')
-
-results = [] 
 
 for item in soup.find_all('item'):
     vendor = ""
@@ -34,16 +37,17 @@ for item in soup.find_all('item'):
     if "fortinet" in link:
         vendor = "Fortinet"
 
-    results.append({
-        "vendor": vendor,
-        "title": title,
-        "published": pub_date,
-        "link": link,
-        "description": desc_clean,
-        "severity": rating
-    })
+    collection.update_one(
+        {"link": link},
+        {"$set": {
+            "vendor": vendor,
+            "title": title,
+            "published": pub_date,
+            "link": link,
+            "description": desc_clean,
+            "severity": rating
+        }},
+        upsert=True
+    )
 
-with open("vulnerabilities.json", "w", encoding="utf-8") as f:
-    json.dump(results, f, indent=4, ensure_ascii=False)
-
-print("JSON file 'fortinet_vulnerabilities.json' created successfully.")
+print("Data saved to MongoDB collection 'vulnerabilities' in 'vulnerability_db' database.")
