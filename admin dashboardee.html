@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0a0f24;
+      color: #fff;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #101935;
+      padding: 20px;
+      height: 100vh;
+    }
+
+    .profile {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile img {
+      width: 50px;
+    }
+
+    .profile p {
+      margin: 10px 0 0;
+      font-weight: 600;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav li {
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #1e2a4a;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    nav li.active,
+    nav li:hover {
+      background-color: #2a3e78;
+    }
+
+    .main {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background-color: #1c2c4d;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .vulnerability-alerts,
+    .overview,
+    .recent-sources,
+    .realtime-data,
+    .notifications,
+    .email-form {
+      background-color: #1c2c4d;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #2f3b5c;
+    }
+
+    th {
+      background-color: #273862;
+    }
+
+    .high {
+      color: #ff5e5e;
+      font-weight: bold;
+    }
+
+    .medium {
+      color: #ffb74d;
+      font-weight: bold;
+    }
+
+    .low {
+      color: #81c784;
+      font-weight: bold;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    form label {
+      margin-top: 10px;
+    }
+
+    form input,
+    form textarea {
+      margin-top: 5px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #2f3b5c;
+      color: white;
+    }
+
+    form button {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #00bcd4;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="profile">
+      <img src="https://img.icons8.com/ios-filled/50/user.png" alt="Admin" />
+      <p>Admin</p>
+    </div>
+    <nav>
+      <ul>
+        <li class="active">Dashboard</li>
+        <li>Real-Time Data</li>
+        <li>Notifications</li>
+        <li>Reports</li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="main">
+    <h1>Dashboard</h1>
+    <div class="cards">
+      <div class="card">Vulnerability Scraped<br><strong>1,250</strong></div>
+      <div class="card">Integrity Verified<br><strong>1,250</strong><br>Alerts<br><strong>1,200</strong></div>
+      <div class="card">Alerts Sent<br><strong>350</strong></div>
+      <div class="card">OEM Sources<br><strong>7E</strong></div>
+    </div>
+
+    <div class="content">
+      <div class="vulnerability-alerts">
+        <h2>Vulnerability Alerts</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Source</th>
+              <th>Severity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>OEM X Vulnerability</td><td>OEM X</td><td class="high">High</td></tr>
+            <tr><td>Product Y Buffer Overflow</td><td>GNU</td><td class="medium">Medium</td></tr>
+            <tr><td>Library 2 SQL injection</td><td>NVD</td><td class="low">Low</td></tr>
+            <tr><td>OEM X Vulnerability</td><td>OEM X</td><td class="high">High</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="overview">
+        <h2>Integrity Overview</h2>
+        <canvas id="integrityChart"></canvas>
+        <p>Last 7 days</p>
+      </div>
+
+      <div class="recent-sources">
+        <h2>Recent Sources</h2>
+        <ul>
+          <li>OEM X</li>
+          <li>OEM Y</li>
+          <li>OEM Z</li>
+          <li>OEM W</li>
+        </ul>
+      </div>
+
+      <div class="realtime-data">
+        <h2>Real-Time Data</h2>
+        <p>Loading vulnerability data live from the monitoring system.</p>
+      </div>
+
+      <div class="notifications">
+        <h2>Notifications</h2>
+        <ul>
+          <li>High severity alert from OEM X</li>
+          <li>New vulnerability scraped from GNU</li>
+          <li>Daily integrity check passed</li>
+        </ul>
+      </div>
+
+      <div class="email-form">
+        <h2>Send Alert Email</h2>
+        <form id="emailForm">
+          <label for="to">To:</label>
+          <input type="email" id="to" name="to" required />
+
+          <label for="subject">Subject:</label>
+          <input type="text" id="subject" name="subject" required />
+
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <button type="submit">Send Email</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('integrityChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Integrity %',
+          data: [98, 96, 97, 99, 100, 98, 100],
+          fill: false,
+          borderColor: '#00d1ff',
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+   document.getElementById("emailForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Email sent successfully (mock)!");
+    });
+  </script>
+</body>
+
+</html>
