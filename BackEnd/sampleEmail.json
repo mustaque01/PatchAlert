@@ -1,5 +1,14 @@
 [
   {
-    "email": "mustakarman560@gmail.com"
+    "email": "mustakarman560@gmail.com",
+    "category": "Low"
+  },
+  {
+    "email": "umaransari220457@acropolis.in",
+    "category": "High"
+  },
+  {
+    "email": "umaransari4444r@gmail.com",
+    "category": "Critical"
   }
 ]

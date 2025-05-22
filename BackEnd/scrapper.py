@@ -8,6 +8,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from html import unescape
 
+# MongoDB Connection
 client = MongoClient("mongodb://localhost:27017/")
 db = client["VulnarabilityData"]
 microsoft_coll = db["Microsoft"]
@@ -16,14 +17,13 @@ ubuntu_coll = db["Ubuntu"]
 fortinet_coll = db["Fortinet"]
 emails_coll = db["Technician Email"]
 
+# Email Configuration
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SENDER_EMAIL = "umarroxx777@gmail.com"
-SENDER_PASSWORD = "tttk jjjy gfqa rodn"
+SENDER_PASSWORD = "tttk jjjy gfqa rodn"  # Use App Password
 
-severity = ["Low", "High", "Critical"]
-
-# RSS Feeds
+# RSS Feed Sources
 source_link = [
     "https://tools.cisco.com/security/center/psirtrss20/CiscoSecurityAdvisory.xml",
     "https://ubuntu.com/security/notices/rss.xml",
@@ -31,6 +31,9 @@ source_link = [
     "https://api.msrc.microsoft.com/update-guide/rss"
 ]
 
+severity_levels = ["Low", "High", "Critical"]
+
+# Email sending function
 def send_email_custom(sender_email, sender_password, receiver_email, subject, body, smtp_server="smtp.gmail.com", smtp_port=587):
     msg = MIMEMultipart()
     msg['From'] = sender_email
@@ -47,12 +50,7 @@ def send_email_custom(sender_email, sender_password, receiver_email, subject, bo
     except Exception as e:
         print(f"❌ Failed to send email to {receiver_email}: {e}")
 
-try:
-    technicians = [e['email'] for e in emails_coll.find()]
-except KeyError as e:
-    print("⚠️ Missing 'email' field in Technician Email collection.")
-    technicians = []
-
+# Main Scraper and Notifier
 for url in source_link:
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'xml')
@@ -66,7 +64,7 @@ for url in source_link:
         desc_clean = BeautifulSoup(desc_unescaped, "html.parser").get_text()
 
         match = re.search(r"Security Impact Rating:\s*(\w+)", desc_clean)
-        rating = match.group(1) if match else random.choice(severity)
+        rating = match.group(1) if match else random.choice(severity_levels)
 
         if "cisco" in link:
             vendor = "Cisco"
@@ -96,20 +94,22 @@ for url in source_link:
             upsert=True
         )
 
+        # Send email if new entry is added
         if result.upserted_id:
             subject = f"[{vendor} Alert] {title}"
             body = f"""
             New vulnerability alert from {vendor}!
-            
+
             Title: {title}
             Severity: {rating}
             Published: {pub_date}
             Link: {link}
-            
+
             Description:
             {desc_clean}
             """
-            for tech_email in technicians:
-                send_email_custom(SENDER_EMAIL, SENDER_PASSWORD, tech_email, subject, body)
+            matching_techs = emails_coll.find({"category": rating})
+            for tech in matching_techs:
+                send_email_custom(SENDER_EMAIL, SENDER_PASSWORD, tech['email'], subject, body)
 
     print(f"✔ Data processed for {url}")
