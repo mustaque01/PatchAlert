@@ -5,169 +5,166 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0f24;
-      color: #fff;
-      display: flex;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .sidebar {
-      width: 220px;
-      background-color: #101935;
-      padding: 20px;
-      height: 100vh;
-    }
+body {
+  display: flex;
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
 
-    .profile {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.sidebar {
+  width: 220px;
+  background-color: #111827;
+  color: #fff;
+  height: 100vh;
+  position: fixed;
+  padding: 20px;
+}
 
-    .profile img {
-      width: 50px;
-    }
+.sidebar .profile {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-    .profile p {
-      margin: 10px 0 0;
-      font-weight: 600;
-    }
+.sidebar .profile img {
+  width: 50px;
+  border-radius: 50%;
+}
 
-    nav ul {
-      list-style: none;
-      padding: 0;
-    }
+.sidebar nav ul {
+  list-style: none;
+}
 
-    nav li {
-      padding: 10px;
-      margin-bottom: 10px;
-      background-color: #1e2a4a;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+.sidebar nav ul li {
+  padding: 12px;
+  margin: 8px 0;
+  background: #1e293b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
 
-    nav li.active,
-    nav li:hover {
-      background-color: #2a3e78;
-      
-    }
+.sidebar nav ul li.active,
+.sidebar nav ul li:hover {
+  background-color: #2563eb;
+}
 
-    .main {
-      flex-grow: 1;
-      padding: 20px;
-    }
+.main {
+  margin-left: 240px;
+  padding: 20px;
+  flex-grow: 1;
+}
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
+h1 {
+  margin-bottom: 20px;
+}
 
-    .cards {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
 
-    .card {
-      background-color: #1c2c4d;
-      padding: 20px;
-      border-radius: 10px;
-      flex: 1;
-      text-align: center;
-      font-weight: 600;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
+.card {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  text-align: center;
+}
 
-    .content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
+.content > div {
+  margin-bottom: 30px;
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
 
-    .vulnerability-alerts,
-    .overview,
-    .recent-sources,
-    .realtime-data,
-    .notifications,
-    .email-form {
-      background-color: #1c2c4d;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      color: #fff;
-    }
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #334155;
+}
 
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #2f3b5c;
-    }
+th {
+  background-color: #0f172a;
+  color: #cbd5e1;
+}
 
-    th {
-      background-color: #273862;
-    }
+td {
+  color: #f1f5f9;
+}
 
-    .high {
-      color: #ff5e5e;
-      font-weight: bold;
-    }
+.high {
+  color: #f87171;
+  font-weight: bold;
+}
 
-    .medium {
-      color: #ffb74d;
-      font-weight: bold;
-    }
+.medium {
+  color: #facc15;
+}
 
-    .low {
-      color: #81c784;
-      font-weight: bold;
-    }
+.low {
+  color: #4ade80;
+}
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+}
 
-    form label {
-      margin-top: 10px;
-    }
+form label {
+  margin: 10px 0 4px;
+}
 
-    form input,
-    form textarea {
-      margin-top: 5px;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      background-color: #2f3b5c;
-      color: white;
-    }
+form input,
+form textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
 
-    form button {
-      margin-top: 15px;
-      padding: 10px;
-      background-color: #00bcd4;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+form button {
+  margin-top: 12px;
+  padding: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-    form button:hover {
-      background-color: #0097a7;
-    }
+form button:hover {
+  background-color: #1e40af;
+}
+
   </style>
 </head>
 
 <body>
-  <div class="sidebar">
+  <!-- Existing HTML and JavaScript ain unchanged -->
+    <div class="sidebar">
     <div class="profile">
       <img src="https://img.icons8.com/ios-filled/50/user.png" alt="Admin" />
       <p>Admin</p>
@@ -175,9 +172,14 @@
     <nav>
       <ul>
         <li class="active">Dashboard</li>
-        <li>Real-Time Data</li>
+        <li>Recent Vulnerabilities</li>
+        <li>Alert Received</li>
+        <li>Manage Sources</li>
+        <li>Integrity Overview</li>
+        <li>Manage Users</li>
+        <li>Alerts Sent</li>
         <li>Notifications</li>
-        <li>Reports</li>
+        <li>Real-Time Data</li>
       </ul>
     </nav>
   </div>
@@ -185,16 +187,16 @@
   <div class="main">
     <h1>Dashboard</h1>
     <div class="cards">
-      <div class="card">Vulnerability Scraped<br><strong>1,250</strong></div>
+      <div class="card">Vulnerability Scraped<br><strong id="scraped-count">0</strong></div>
       <div class="card">Integrity Verified<br><strong>1,250</strong><br>Alerts<br><strong>1,200</strong></div>
-      <div class="card">Alerts Sent<br><strong>350</strong></div>
+      <div class="card">Alerts Sent<br><strong id="alerts-count">0</strong></div>
       <div class="card">OEM Sources<br><strong>7E</strong></div>
     </div>
 
     <div class="content">
       <div class="vulnerability-alerts">
-        <h2>Vulnerability Alerts</h2>
-        <table>
+        <h2>Recent Vulnerabilities</h2>
+        <table id="vulnTable">
           <thead>
             <tr>
               <th>Title</th>
@@ -203,10 +205,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>OEM X Vulnerability</td><td>OEM X</td><td class="high">High</td></tr>
-            <tr><td>Product Y Buffer Overflow</td><td>GNU</td><td class="medium">Medium</td></tr>
-            <tr><td>Library 2 SQL injection</td><td>NVD</td><td class="low">Low</td></tr>
-            <tr><td>OEM X Vulnerability</td><td>OEM X</td><td class="high">High</td></tr>
           </tbody>
         </table>
       </div>
@@ -218,8 +216,8 @@
       </div>
 
       <div class="recent-sources">
-        <h2>Recent Sources</h2>
-        <ul>
+        <h2>Manage Sources</h2>
+        <ul id="sourcesList">
           <li>OEM X</li>
           <li>OEM Y</li>
           <li>OEM Z</li>
@@ -227,18 +225,25 @@
         </ul>
       </div>
 
-      <div class="realtime-data">
-        <h2>Real-Time Data</h2>
-        <p>Loading vulnerability data live from the monitoring system.</p>
+      <div class="manage-users">
+        <h2>Manage Users</h2>
+        <p>Admin and user roles can be assigned and modified here.</p>
+      </div>
+
+      <div class="alerts-sent">
+        <h2>Alerts Sent</h2>
+        <p>Total alerts sent to stakeholders and users for recent vulnerabilities.</p>
       </div>
 
       <div class="notifications">
         <h2>Notifications</h2>
-        <ul>
-          <li>High severity alert from OEM X</li>
-          <li>New vulnerability scraped from GNU</li>
-          <li>Daily integrity check passed</li>
+        <ul id="notificationList">
         </ul>
+      </div>
+
+      <div class="realtime-data">
+        <h2>Real-Time Data</h2>
+        <p id="realtimeText">Loading vulnerability data live from the monitoring system...</p>
       </div>
 
       <div class="email-form">
@@ -284,7 +289,42 @@
       }
     });
 
-   document.getElementById("emailForm").addEventListener("submit", function (e) {
+    const vulnerabilities = [
+      { title: 'OEM X Vulnerability', source: 'OEM X', severity: 'High' },
+      { title: 'Product Y Buffer Overflow', source: 'GNU', severity: 'Medium' },
+      { title: 'Library 2 SQL injection', source: 'NVD', severity: 'Low' },
+      { title: 'Router Z Remote Code Execution', source: 'Cisco', severity: 'High' },
+    ];
+
+    const notifications = [
+      'High severity alert from OEM X',
+      'New vulnerability scraped from GNU',
+      'Daily integrity check passed'
+    ];
+
+    function updateDashboard() {
+      const tbody = document.getElementById('vulnTable').querySelector('tbody');
+      tbody.innerHTML = '';
+      vulnerabilities.forEach(vuln => {
+        const row = `<tr><td>${vuln.title}</td><td>${vuln.source}</td><td class="${vuln.severity.toLowerCase()}">${vuln.severity}</td></tr>`;
+        tbody.innerHTML += row;
+      });
+
+      document.getElementById('scraped-count').innerText = vulnerabilities.length;
+      document.getElementById('alerts-count').innerText = vulnerabilities.length;
+
+      const notifList = document.getElementById('notificationList');
+      notifList.innerHTML = '';
+      notifications.forEach(msg => {
+        notifList.innerHTML += `<li>${msg}</li>`;
+      });
+
+      document.getElementById('realtimeText').innerText = `Last update: ${new Date().toLocaleTimeString()}`;
+    }
+
+    updateDashboard();
+
+    document.getElementById("emailForm").addEventListener("submit", function (e) {
       e.preventDefault();
       alert("Email sent successfully (mock)!");
     });
