@@ -19,6 +19,7 @@ ubuntu_coll = db["Ubuntu"]
 fortinet_coll = db["Fortinet"]
 emails_coll = db["Technician Email"]
 
+
 # SMTP Email Config
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
