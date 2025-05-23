@@ -13,12 +13,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+// Debug log
+console.log("Mongo URI:", process.env.MONGO_URI);
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB error:', err));
+
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -53,4 +57,11 @@ app.post('/login', async (req, res) => {
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log("server is ready");
+  
+});
+
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboardee.html'));
 });
