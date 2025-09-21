@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatchAlert - Real-Time Vulnerability Alerts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: transparent;
+    }
+
+    .navbar a {
+      color: white;
+      margin-left: 30px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00e0ff;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      padding: 100px 50px;
+      max-width: 700px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #a0c4ff;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background-color: #00e0ff;
+      color: #003b6f;
+    }
+
+    .btn-secondary {
+      background-color: #122b45;
+      color: white;
+      border: 1px solid #00e0ff;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero {
+        padding: 50px 20px;
+      }
+
+      .navbar {
+        padding: 20px;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">PatchAlert</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Real-Time Vulnerability Alerts for Critical Sectors</h1>
+    <p>Monitor, Detect, and Act on Cyber Threats Instantly</p>
+    <div class="hero-buttons">
+      <a href="auth.html" class="btn btn-primary">Get Started</a>
+      <button class="btn btn-secondary">View Dashboard</button>
+    </div>
+  </div>
+</body>
+</html>
